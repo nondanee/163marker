@@ -66,17 +66,17 @@ def marker(path, song):
         audio['comment'] = identification
     audio.save()
 
-    image_data = requests.get(meta['albumPic'] + '?param=300y300').content
+    data = requests.get(meta['albumPic'] + '?param=300y300').content
     if format == 'flac':
         audio = flac.FLAC(path)
         image = flac.Picture()
-        embed(image, image_data, 3)
+        embed(image, data, 3)
         audio.clear_pictures()
         audio.add_picture(image)
     elif format == 'mp3':
         audio = mp3.MP3(path)
         image = id3.APIC()
-        embed(image, image_data, 6)
+        embed(image, data, 6)
         audio.tags.add(image)
     audio.save()
 
