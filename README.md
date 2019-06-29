@@ -13,9 +13,11 @@ $ pip install -r requirements.txt
 ## Usage
 
 ```
-$ python main.py [file] [url]
+$ python main.py (file) (url) [id]
 ```
 
-- `file` 支持 MP3 和 FLAC 格式
+- `file` 文件路径 (支持 MP3 和 FLAC 格式)
 
-- `url` 用户动态链接 (客户端内分享动态，复制链接)
+- `url` 用户动态链接 / 专辑链接 (客户端内分享，复制链接)
+
+- `id` 强制填充歌曲 id (可选)
