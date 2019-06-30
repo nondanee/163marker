@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-import sys
+import sys, traceback
 import re, json, binascii, base64, hashlib
 
 import requests
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from mutagen import mp3, flac, id3
-
-key = binascii.a2b_hex('2331346C6A6B5F215C5D2630553C2728')
 
 def parser(url):
     if 'event' in url:
@@ -66,7 +64,7 @@ def marker(path, song, id = None):
         'mp3DocId': hashlib.md5(streamify(open(path, 'rb'))).hexdigest()
     }
 
-    cryptor = AES.new(key, AES.MODE_ECB)
+    cryptor = AES.new(binascii.a2b_hex('2331346C6A6B5F215C5D2630553C2728'), AES.MODE_ECB)
     identification = 'music:' + json.dumps(meta)
     identification = '163 key(Don\'t modify):' + base64.b64encode(cryptor.encrypt(pad(identification.encode('utf8'), 16))).decode('utf8')
 
@@ -99,5 +97,5 @@ def marker(path, song, id = None):
 if __name__ == '__main__':
     try:
         marker(sys.argv[1], parser(sys.argv[2]), sys.argv[3] if len(sys.argv) > 3 else None)
-    except Exception as e:
-        print(e)
+    except Exception:
+        traceback.print_exc()
