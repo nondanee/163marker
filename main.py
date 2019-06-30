@@ -21,6 +21,9 @@ def parser(url):
             return data['song']
         elif 'resource' in data and 'resourceInfo' in data['resource']:
             return json.loads(data['resource']['resourceInfo'])
+        elif 'event' in data:
+            data = json.loads(data['event']['json'])
+            return data['song']
     elif 'album' in url:
         id = re.search(r'id=(\d+)', url)[1]
         response = requests.get('https://music.163.com/api/album/' + id)
