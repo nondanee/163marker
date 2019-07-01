@@ -55,7 +55,7 @@ def marker(path, song, id = None):
         'alias': song['alias'],
         'artist': [[artist['name'], artist['id']] for artist in song['artists']],
         'musicId': id if id else song['id'],
-        'musicName': song['name'] if 'name' in song else audio['title'],
+        'musicName': song['name'] if 'name' in song else audio['title'][0],
         'mvId': song['mvid'],
         'transNames': [],
         'format': format,
