@@ -28,9 +28,7 @@ def parser(url):
         data = json.loads(response.text)
         return {
             'album': data['album'],
-            'artists': data['album']['artists'],
-            'alias': [],
-            'mvid': 0
+            'artists': data['album']['artists']
         }
 
 def marker(path, song, id = None):
@@ -52,11 +50,11 @@ def marker(path, song, id = None):
         'albumId': song['album']['id'],
         'albumPic': song['album']['picUrl'],
         'albumPicDocId': song['album']['pic'] if 'pic' in song['album'] else re.search(r'/(\d+)\.\w+$', song['album']['picUrl'])[1],
-        'alias': song['alias'],
+        'alias': song['alias'] if 'alias' in song else [],
         'artist': [[artist['name'], artist['id']] for artist in song['artists']],
         'musicId': id if id else song['id'],
         'musicName': song['name'] if 'name' in song else audio['title'][0],
-        'mvId': song['mvid'],
+        'mvId': song['mvid'] if 'mvid' in song else 0,
         'transNames': [],
         'format': format,
         'bitrate': audio.info.bitrate,
