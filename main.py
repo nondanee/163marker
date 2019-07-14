@@ -19,7 +19,7 @@ def parse(uri):
         data = json.loads(data['json'])
         if 'song' in data:
             return data['song']
-        elif 'resource' in data and 'resourceInfo' in data['resource']:
+        elif 'resource' in data:
             return json.loads(data['resource']['resourceInfo'])
         elif 'event' in data:
             data = json.loads(data['event']['json'])
