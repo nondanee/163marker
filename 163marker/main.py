@@ -126,7 +126,7 @@ def extract(path):
     meta = unpad(cryptor.decrypt(identification), 16).decode('utf8')
     return json.loads(meta[6:])
 
-if __name__ == '__main__':
+def app():
     import argparse, traceback
 
     parser = argparse.ArgumentParser(
@@ -153,3 +153,6 @@ if __name__ == '__main__':
             print(json.dumps(extract(args.file), ensure_ascii = False, indent = 4))
     except Exception:
         traceback.print_exc()
+
+if __name__ == '__main__':
+    app()
