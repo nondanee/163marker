@@ -17,8 +17,10 @@ $ pip install git+https://github.com/nondanee/163marker.git
 
 ## Usage
 
+### Execute
+
 ```
-$ 163marker -h
+$ 163marker -h # 等同于 "python 163marker/main.py -h" 和 "python -m 163marker.main -h"
 usage: 163marker [-h] file [uri] [id]
 
 positional arguments:
@@ -36,8 +38,23 @@ optional arguments:
 
 - `id` 强制填充歌曲 ID (可选)
 
+### Import
+
+```python
+import importlib # 因包名为数字开头无法直接 import
+marker = importlib.import_module('163marker')
+```
+
+```python
+marker.extract(file_path) # 从文件读取标记内容
+
+marker.parse(resource_uri) # 从链接或文件地址获得元数据
+
+marker.mark(file_path, song_meta, song_id) # 由元数据生成标记并写入文件
+```
 
 > 注: 对于已经 "消失" 的曲目 (无歌曲链接)
+>
 >  1. 若曾分享单曲到动态，可从用户的动态中提取信息
 >
 >  2. 若曲目消失而专辑未下架，可用专辑信息重建数据，再填充歌曲 ID
