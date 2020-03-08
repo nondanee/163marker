@@ -1,4 +1,4 @@
-# 163 Marker
+# 163 Marker ![shield](https://img.shields.io/badge/python-3-blue)
 
 为歌曲添加 `163 key(Don't modify)` 标记
 
