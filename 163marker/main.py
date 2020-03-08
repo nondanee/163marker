@@ -64,7 +64,7 @@ def mark(path, song, id = None):
 
     format = 'flac' if open(path, 'rb').read(4) == binascii.a2b_hex('664C6143') else 'mp3'
     audio = mp3.EasyMP3(path) if format == 'mp3' else flac.FLAC(path)
-    
+
     meta = {
         'album': song['album']['name'],
         'albumId': song['album']['id'],
@@ -129,21 +129,10 @@ def extract(path):
 def app():
     import argparse, traceback
 
-    parser = argparse.ArgumentParser(
-        prog = '163marker'
-    )
-    parser.add_argument(
-        'file', metavar = 'file',
-        help = 'audio file path (MP3/FLAC)'
-    )
-    parser.add_argument(
-        'uri', metavar = 'uri', nargs = '?',
-        help = 'meta data source (URL/PATH)'
-    )
-    parser.add_argument(
-        'id', metavar = 'id', nargs = '?',
-        help = 'specific song id'
-    )
+    parser = argparse.ArgumentParser(prog = '163marker')
+    parser.add_argument('file', metavar = 'file', help = 'audio file path (MP3/FLAC)')
+    parser.add_argument('uri', metavar = 'uri', nargs = '?', help = 'meta data source (URL/PATH)')
+    parser.add_argument('id', metavar = 'id', nargs = '?', help = 'specific song id')
     args = parser.parse_args()
 
     try:
