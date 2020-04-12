@@ -83,8 +83,8 @@ def mark(path, song, id = None):
     }
 
     cryptor = AES.new(key, AES.MODE_ECB)
-    identification = 'music:' + json.dumps(meta)
-    identification = '163 key(Don\'t modify):' + base64.b64encode(cryptor.encrypt(pad(identification.encode('utf8'), 16))).decode('utf8')
+    identifier = 'music:' + json.dumps(meta)
+    identifier = '163 key(Don\'t modify):' + base64.b64encode(cryptor.encrypt(pad(identifier.encode('utf8'), 16))).decode('utf8')
 
     audio.delete()
     audio['title'] = meta['musicName']
@@ -92,10 +92,10 @@ def mark(path, song, id = None):
     audio['artist'] = '/'.join([artist[0] for artist in meta['artist']])
 
     if format == 'flac':
-        audio['description'] = identification
+        audio['description'] = identifier
     else:
         audio.tags.RegisterTextKey('comment', 'COMM')
-        audio['comment'] = identification
+        audio['comment'] = identifier
     audio.save()
 
     data = requests.get(meta['albumPic'] + '?param=300y300').content
@@ -115,15 +115,15 @@ def mark(path, song, id = None):
 def extract(path):
     if open(path, 'rb').read(4) == binascii.a2b_hex('664C6143'):
         audio = flac.FLAC(path)
-        identification = audio['description']
+        identifier = audio['description']
     else:
         audio = mp3.MP3(path)
-        identification = [text for item in audio.tags.getall('COMM') for text in item.text]
-    identification = max(identification, key = len)
+        identifier = [text for item in audio.tags.getall('COMM') for text in item.text]
+    identifier = max(identifier, key = len)
 
-    identification = base64.b64decode(identification[22:])
+    identifier = base64.b64decode(identifier[22:])
     cryptor = AES.new(key, AES.MODE_ECB)
-    meta = unpad(cryptor.decrypt(identification), 16).decode('utf8')
+    meta = unpad(cryptor.decrypt(identifier), 16).decode('utf8')
     return json.loads(meta[6:])
 
 def app():
