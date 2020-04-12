@@ -1,4 +1,4 @@
-# 163 Marker ![shield](https://img.shields.io/badge/python-3-blue)
+# 163 Marker ![](https://img.shields.io/badge/python-3-blue?style=flat-square)
 
 为歌曲添加 `163 key(Don't modify)` 标记
 
@@ -41,7 +41,8 @@ optional arguments:
 ### Import
 
 ```python
-import importlib # 因包名为数字开头无法直接 import
+# 因包名为数字开头无法直接 import
+import importlib
 marker = importlib.import_module('163marker')
 ```
 
