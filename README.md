@@ -1,8 +1,8 @@
-# 163 Marker
+# 163 Marker ![shield](https://img.shields.io/badge/python-3-blue)
 
 为歌曲添加 `163 key(Don't modify)` 标记
 
-让非网易云客户端下载的音频文件能被客户端识别，正常匹配歌词和查看评论
+让非网易云客户端下载的音频文件能被客户端识别，正常匹配歌词和查看评论 (与云盘匹配无关)
 
 ## Dependency
 
@@ -19,7 +19,7 @@ $ pip install git+https://github.com/nondanee/163marker.git
 
 ### Execute
 
-```
+```sh
 $ 163marker -h # 等同于 "python 163marker/main.py -h" 和 "python -m 163marker.main -h"
 usage: 163marker [-h] file [uri] [id]
 
@@ -56,9 +56,7 @@ marker.mark(file_path, song_meta, song_id) # 由元数据生成标记并写入�
 > 注: 对于已经 "消失" 的曲目 (无歌曲链接)
 >
 >  1. 若曾分享单曲到动态，可从用户的动态中提取信息
->
 >  2. 若曲目消失而专辑未下架，可用专辑信息重建数据，再填充歌曲 ID
->
 >  3. 若曾下载过相同专辑的其他歌曲，可拷贝已有文件的标记，再填充歌曲 ID
 >
->      2/3 情况下默认同专辑歌手一致，歌名将从 ID3 tag `title` 中读取，请预先设置
+>  (2/3 情况下默认同专辑歌手一致，歌名将从 ID3 tag `title` 中读取，请预先设置)
