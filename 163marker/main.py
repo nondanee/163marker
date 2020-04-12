@@ -69,7 +69,7 @@ def mark(path, song, id = None):
         'album': song['album']['name'],
         'albumId': song['album']['id'],
         'albumPic': song['album']['picUrl'],
-        'albumPicDocId': song['album']['pic'] if 'pic' in song['album'] else re.search(r'/(\d+)\.\w+$', song['album']['picUrl']).group(1),
+        'albumPicDocId': str(song['album']['pic'] if 'pic' in song['album'] else re.search(r'/(\d+)\.\w+$', song['album']['picUrl']).group(1)),
         'alias': song['alias'] if 'alias' in song else [],
         'artist': [[artist['name'], artist['id']] for artist in song['artists']],
         'musicId': id if id else song['id'],
