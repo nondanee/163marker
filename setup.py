@@ -30,7 +30,7 @@ setup(
     install_requires = install_requires,
     entry_points = {
         'console_scripts': [
-            '163marker=163marker.main:app'
+            '163marker=marker163.main:app'
         ]
     }
 )
