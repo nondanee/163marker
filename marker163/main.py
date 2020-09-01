@@ -13,7 +13,7 @@ def parse(uri):
     if 'event' in uri:
         id = re.search(r'id=(\d+)', uri).group(1)
         uid = re.search(r'uid=(\d+)', uri).group(1)
-        response = requests.get('https://music.163.com/event', params = {'id': id, 'uid': uid}, headers = headers)
+        response = requests.get('https://music.163.com/event', params = {'id': id, 'uid': uid}, headers = headers, verify = False)
         data = re.search(r'<textarea.+id="event-data".*>([\s\S]+?)</textarea>', response.text).group(1)
         data = json.loads(data.replace('&quot;', '"'))
         data = json.loads(data['json'])
@@ -29,7 +29,7 @@ def parse(uri):
                 return json.loads(data['resource']['resourceInfo'])
     elif 'album' in uri:
         id = re.search(r'id=(\d+)', uri).group(1)
-        response = requests.get('https://music.163.com/api/album/' + id, headers = headers)
+        response = requests.get('https://music.163.com/api/album/' + id, headers = headers, verify = False)
         data = json.loads(response.text)
         return {
             'album': data['album'],
@@ -37,7 +37,7 @@ def parse(uri):
         }
     elif 'song' in uri:
         id = re.search(r'id=(\d+)', uri).group(1)
-        response = requests.get('https://music.163.com/api/song/detail?ids=[' + id + ']', headers = headers)
+        response = requests.get('https://music.163.com/api/song/detail?ids=[' + id + ']', headers = headers, verify = False)
         data = json.loads(response.text)
         return data['songs'][0]
     elif os.path.exists(uri):
@@ -98,7 +98,7 @@ def mark(path, song, id = None):
         audio['comment'] = identifier
     audio.save()
 
-    data = requests.get(meta['albumPic'] + '?param=300y300').content
+    data = requests.get(meta['albumPic'] + '?param=300y300', verify = False).content
     if format == 'flac':
         audio = flac.FLAC(path)
         image = flac.Picture()
