@@ -2,15 +2,9 @@
 import os
 from setuptools import setup, find_packages
 
-try:
-    from pip._internal.req import parse_requirements
-except ImportError:
-    from pip.req import parse_requirements
-
-requirements = parse_requirements(
-    os.path.join(os.path.dirname(__file__), 'requirements.txt'),
-    session = False
-)
+with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
+    lines = [line.strip() for line in f]
+    requirements = [line for line in lines if line and not line.startswith('#')]
 
 setup(
     name = '163marker',
@@ -24,7 +18,7 @@ setup(
     platforms = 'any',
     zip_safe = False,
     python_requires = '>=3.4',
-    install_requires = [str(requirement.req) for requirement in requirements],
+    install_requires = requirements,
     entry_points = {
         'console_scripts': [
             '163marker=163marker.main:app'
