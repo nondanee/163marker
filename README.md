@@ -20,7 +20,7 @@ $ pip install git+https://github.com/nondanee/163marker.git
 ### Execute
 
 ```sh
-$ 163marker -h # 等同于 "python 163marker/main.py -h" 和 "python -m 163marker.main -h"
+$ 163marker -h # 等同于 "python 163marker/app.py -h" 和 "python -m 163marker.app -h"
 usage: 163marker [-h] file [uri] [id]
 
 positional arguments:
@@ -33,9 +33,7 @@ optional arguments:
 ```
 
 - `file` 文件路径 (支持 MP3 和 FLAC 格式)
-
 - `uri` 用户动态 / 专辑 / 歌曲链接 (客户端内分享，复制链接) 或文件路径 (拷贝标记)
-
 - `id` 强制填充歌曲 ID (可选)
 
 ### Import

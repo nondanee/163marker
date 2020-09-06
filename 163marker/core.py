@@ -7,13 +7,13 @@ from Crypto.Util.Padding import pad, unpad
 from mutagen import mp3, flac, id3
 
 key = binascii.a2b_hex('2331346C6A6B5F215C5D2630553C2728')
-headers = {'X-Real-IP': '211.161.244.70', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'}
+headers = { 'X-Real-IP': '211.161.244.70', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36' }
 
 def parse(uri):
     if 'event' in uri:
         id = re.search(r'id=(\d+)', uri).group(1)
         uid = re.search(r'uid=(\d+)', uri).group(1)
-        response = requests.get('https://music.163.com/event', params = {'id': id, 'uid': uid}, headers = headers)
+        response = requests.get('https://music.163.com/event', params = { 'id': id, 'uid': uid }, headers = headers)
         data = re.search(r'<textarea.+id="event-data".*>([\s\S]+?)</textarea>', response.text).group(1)
         data = json.loads(data.replace('&quot;', '"'))
         data = json.loads(data['json'])
@@ -48,7 +48,7 @@ def parse(uri):
                 'id': data['albumId'],
                 'picUrl': data['albumPic']
             },
-            'artists': [{'name': artist[0], 'id': artist[1]} for artist in data['artist']]
+            'artists': [{ 'name': artist[0], 'id': artist[1] } for artist in data['artist']]
         }
 
 def mark(path, song, id = None):
@@ -125,23 +125,3 @@ def extract(path):
     cryptor = AES.new(key, AES.MODE_ECB)
     meta = unpad(cryptor.decrypt(identifier), 16).decode('utf8')
     return json.loads(meta[6:])
-
-def app():
-    import argparse, traceback
-
-    parser = argparse.ArgumentParser(prog = '163marker')
-    parser.add_argument('file', metavar = 'file', help = 'audio file path (MP3/FLAC)')
-    parser.add_argument('uri', metavar = 'uri', nargs = '?', help = 'meta data source (URL/PATH)')
-    parser.add_argument('id', metavar = 'id', nargs = '?', help = 'specific song id')
-    args = parser.parse_args()
-
-    try:
-        if args.uri is not None:
-            mark(args.file, parse(args.uri), args.id)
-        else:
-            print(json.dumps(extract(args.file), ensure_ascii = False, indent = 4))
-    except Exception:
-        traceback.print_exc()
-
-if __name__ == '__main__':
-    app()
